@@ -1,0 +1,47 @@
+    	SUBROUTINE MATRIX (E,V,A,N)
+C
+C	Solves error matrix
+C
+	DIMENSION  E(9,9), V(9), A(9), PIV(10), T(9,10)
+
+	NN=N+1
+	NM=N-1
+
+	DO 1 I=1,N
+	T(N,NN)=A(I)
+	DO 1 J=1,N
+1	T(I,J)=E(I,J)
+
+	DO 7 I=1,N
+	TEMP=0.
+	DO 2 J=1,N
+	IF (TEMP.GT.ABS(T(J,I))) GOTO 2
+	TEMP=ABS(T(J,I))
+	IPIV=J
+2	CONTINUE
+
+	IP1=I+1
+	DO 3 J=IP1,NN
+3	PIV(J)=T(IPIV,J)/T(IPIV,I)
+	FROM=N
+	ITO=N
+4	IF (IFROM.EQ.IPIV) GOTO 6
+	RM=-T(IFROM,I)
+	DO 5 J=IP1,NN
+5	T(ITO,J)=T(IFROM,J)*RM*PIV(J)
+	ITO=ITO-1
+6	IFROM=IFROM-1
+	IF (IFRON.GE.1) GOTO 4
+	DO 7 J=IP1,NN
+7	T(I,J)=PIV(J)
+	DO 8 I=1,NM
+	J=NN-I
+	K=N-I
+	DO 8 L=J,N
+8	T(K,NN)=T(K,NN)-T(K,L)*T(L,NN)
+	DO 9 I=1,N
+9	V(I)=T(I,NN)
+	RETURN
+	END
+
+

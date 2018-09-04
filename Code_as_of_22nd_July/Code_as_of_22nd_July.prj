@@ -1,0 +1,370 @@
+{
+  "Root":{
+    "Folders":[{
+        "Folders":[],
+        "Name":"+Basic_engine",
+        "Files":[{
+            "filename":"Basic_engine/AFQUIR.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/AFQUIR.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/ATMOS.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/ATMOS.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/CDHPTB.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/CHBTD.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/CMBTD.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/COAFBN.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/COAFBN.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/COCOMB.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/COCOMB.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/COCOMP.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/CODUCT.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/COFAN.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/COHPTB.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/COINLT.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/COINTC.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/COIPTB.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/COIPTB.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/COLPTB.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/COMIX.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/COMNOZ.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/CONDIV.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/CONOUT.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/CONVRG.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/Correct_COMMON_BLOCKS.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/Correct_COMMON_BLOCKS.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/DERIV.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/DISTRB.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/ENGBAL.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/ERROR.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/ETAAB.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/FASTBK.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/FRTOSD.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/GEN2.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/GUESS.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/INDUMY.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/MATRIX.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/NO_FCNTRL.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/NO_FCNTRL.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/NO_NOZNTRL.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/NO_NOZNTRL.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/OUTPUT.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/PARABO.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/PERF.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/PROCOM.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/PUTIN.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/RAM.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/RAM2.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/ROLL.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/SEARCH.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/SYG.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/THCOMP.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/THERMO.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/THTURB.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/WDUCTI.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/WDUCTI.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"Basic_engine/ZERO.FOR",
+            "enabled":"1"
+          }]
+      },{
+        "Folders":[],
+        "Name":"+Control",
+        "Files":[]
+      },{
+        "Folders":[],
+        "Name":"+DATA",
+        "Files":[{
+            "filename":"DATA/CMBTD.FOR",
+            "enabled":"1"
+          },{
+            "filename":"DATA/INPUT_1.FOR",
+            "enabled":"1"
+          },{
+            "filename":"DATA/INPUT_1.FOR~",
+            "enabled":"1"
+          }]
+      },{
+        "Folders":[],
+        "Name":"+Default_Maps",
+        "Files":[{
+            "filename":"Default_Maps/BLKCMP.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Default_Maps/BLKFAN.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Default_Maps/BLKFAN.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"Default_Maps/BLKINT.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Default_Maps/CMBDT.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Default_Maps/FAN_MAP.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"Default_Maps/HPTDAT.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Default_Maps/IPTDAT.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Default_Maps/LPTDAT.FOR",
+            "enabled":"1"
+          },{
+            "filename":"Default_Maps/LPTDAT.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"Default_Maps/LPTDAT_1.FOR~",
+            "enabled":"1"
+          }]
+      },{
+        "Folders":[],
+        "Name":"+My_Engine_1",
+        "Files":[{
+            "filename":"My_Engine_1/LPTDAT_1.FOR",
+            "enabled":"1"
+          }]
+      },{
+        "Folders":[],
+        "Name":"+for_test",
+        "Files":[{
+            "filename":"for_test/CDHPTB_BLOCKS.FOR",
+            "enabled":"1"
+          },{
+            "filename":"for_test/CDHPTB_BLOCKS.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"for_test/COAFBN_BLOCKS.FOR",
+            "enabled":"1"
+          },{
+            "filename":"for_test/COAFBN_BLOCKS.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"for_test/COCOMB_BLOCKS.FOR",
+            "enabled":"1"
+          },{
+            "filename":"for_test/COCOMB_BLOCKS.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"for_test/COCOMP_BLOCKS.FOR",
+            "enabled":"1"
+          },{
+            "filename":"for_test/COCOMP_BLOCKS.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"for_test/CODUCT_BLOCKS.FOR",
+            "enabled":"1"
+          },{
+            "filename":"for_test/CODUCT_BLOCKS.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"for_test/COFAN_BLOCKS.FOR",
+            "enabled":"1"
+          },{
+            "filename":"for_test/COFAN_BLOCKS.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"for_test/COINLT_BLOCKS.FOR",
+            "enabled":"1"
+          },{
+            "filename":"for_test/COINLT_BLOCKS.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"for_test/COINTC_BLOCKS.FOR",
+            "enabled":"1"
+          },{
+            "filename":"for_test/COINTC_BLOCKS.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"for_test/COIPTB_BLOCKS.FOR",
+            "enabled":"1"
+          },{
+            "filename":"for_test/COIPTB_BLOCKS.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"for_test/COPY_OF_CORRECTED_BLOCKS.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"for_test/Correct_BLOCKS.FOR",
+            "enabled":"1"
+          },{
+            "filename":"for_test/Correct_BLOCKS.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"for_test/Correct_COMMON_BLOCKS.FOR~",
+            "enabled":"1"
+          },{
+            "filename":"for_test/TRIAL_COMMON_BLOCKS.FOR~",
+            "enabled":"1"
+          }]
+      }],
+    "Name":"+Untitled (target)",
+    "Files":[]
+  },
+  "Name":"Untitled (target)",
+  "Options":{
+    "Compiler Options":{
+      "Fortran Flags":"",
+      "Link Flags":"",
+      "C Flags":""
+    },
+    "Architecture":0,
+    "Type":0,
+    "Revision":2,
+    "Windows GUI":0,
+    "File Options":{
+      "Library Directories":["Default Library Directory"],
+      "Build Directory":"build",
+      "Module Directory":"modules",
+      "Include Directories":["Default Include Directory"]
+    },
+    "Target":"target",
+    "Fortran Options":{
+      "Use C Preprocessor":"false",
+      "Runtime Diagnostics":"false",
+      "Cray Pointers":"false",
+      "Enable OpenMP":"false",
+      "Enable Coarrays":"false",
+      "Default Double for Real":"false"
+    },
+    "Code Generation Options":{
+      "CPU Specific":"false",
+      "Processor":"generic",
+      "Aggressive Loops":"false",
+      "Debugging":"true",
+      "Optimization Mode":0,
+      "Profiling":"false"
+    },
+    "Build Dependencies":1,
+    "Launch Options":{
+      "Working Directory":"",
+      "Keep Console":"true",
+      "External Console":"false",
+      "Command Line Arguments":"",
+      "Build Before Launch":"true"
+    },
+    "Build Options":{
+      "Makefile":"Makefile",
+      "Auto Makefile":"true"
+    },
+    "Linker Options":{
+      "Static Linking Mode":7,
+      "Link LAPACK":0
+    }
+  }
+}

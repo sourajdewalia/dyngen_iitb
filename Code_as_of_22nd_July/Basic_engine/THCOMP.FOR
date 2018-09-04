@@ -1,0 +1,23 @@
+	SUBROUTINE  THCOMP  (PR, ETA, T, H, S, P, T0, H0, S0, P0)
+C
+C	Performs isentropic calculations for compressors
+C
+	COMMON	/UNITS/	SI
+	LOGICAL	SI
+
+	CPG=250.
+	IF (SI)  CPG=1048.0
+	P0=P*PR
+	TP=T*PR**0.28572
+
+	DO 1 I=1,25
+	CALL  THERMO (P0, HP, TP, SP, X1, 0, X2, 0)
+	DELS=SP-S
+	IF  (ABS(DELS).LE.0.00005*S) GOTO 2
+1	TP=TP/EXP(DELS/CPG)
+	CALL  ERROR
+2	H0=H+((HP-H)/ETA)
+	CALL  THERMO (P0, H0, T0, S0, X1, 0, X2, 1)
+	RETURN
+	END
+
