@@ -1,0 +1,16 @@
+common variants due to equivalence: 2
+  common name            procedures    sum of members
+  all2                          1               80
+  all3                          1               80
+
+Locations of equivalence statements:
+  all2
+    z1     ZERO.FOR(69) C:\Users\Souraj\dyngen_iitb\Basic_engine
+    t1     
+    z2     
+    p1     
+  all3
+    z3     ZERO.FOR(69) C:\Users\Souraj\dyngen_iitb\Basic_engine
+    xt55   
+    z4     
+    xfar55 
