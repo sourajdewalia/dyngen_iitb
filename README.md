@@ -1,5 +1,4 @@
 # dyngen_iitb
-# dyngen_iitb
 -Raw Converted contains the files converted from the utility as it is.
 -The FORTRAN code contained a lot of errors such as spelling mistakes of variable names (eg. word -> woro, whi -> mhi) due to conversion of poor quality scanned document to text. Due to this converted code shows a lot of errors. Even the "corrected COMMON BLOCKS" was not correct.
 - MAIN.FOR contains complete code in one file with corrected commonblocks and variable names. This was used to convert to CPP code.
