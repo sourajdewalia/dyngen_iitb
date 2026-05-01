@@ -570,12 +570,40 @@ C
 C
       END
 
-
+C==============================================================
+C     COCOMB - Combustion Chamber Subroutine
+C
+C     Computes the thermodynamic state at the combustor exit (station 4)
+C     given the inlet conditions at station 3.
+C
+C     In DESIGN mode (IDES=1): determines correction factors ETABCF and
+C     WA3CDS from the design-point combustor efficiency map.
+C
+C     In OFF-DESIGN mode (IDES=0): uses correction factors to compute
+C     combustor pressure loss (DPCOM), exit temperature (T4), exit
+C     enthalpy (H4), and fuel-air ratio (FAR4).
+C
+C     Control modes:
+C       MODE=0 or 1 -- T4 is the primary input (held constant or
+C                      set by speed governor); WFB is output.
+C       MODE=2      -- WFB is the primary input; T4 is iterated via
+C                      AFQUIR to satisfy the fuel flow balance.
+C
+C     Combustor efficiency (ETAB) is obtained by 2-D table lookup
+C     (SEARCH) in the /COMB/ map indexed by inlet pressure (P3PSI)
+C     and temperature rise (DTCO).
+C
+C     The lower heating value (HV) of the fuel is computed from a
+C     7th-order polynomial in T4 (Rankine). SI units are handled by
+C     converting T4 and HV before and after the polynomial evaluation.
+C
+C     For single-spool or FXM2CP configurations, HP turbine variables
+C     are zeroed out and flow is routed directly to the IP or LP turbine.
+C
+C     Dynamic volume effects (VCOMB > 0) are handled via DERIV calls
+C     and an inner AFQUIR iteration on H4.
+C=============================================================
       SUBROUTINE COCOMB
-C
-C     Combustor subroutine: calculates combustion using T4 or WFB
-C     as main parameter. Uses BLOCK DATA CMBDT for combustor maps.
-C
       COMMON /WORDS/ WORD
 
       COMMON /DESIGN/
@@ -658,115 +686,108 @@ C
       WORD=AWORD
 
       IF (SI) GOTO 100
-      TSTD=516.668
-      PSTD=1.0
       RA=0.0252
       AJ=2.719
-      GOTO 101
-100	TSTD=1228.149
-      PSTD=101325.0
-      RA=286.9
+      TMAX=4000.
+      TMIN=1000.
+      GO TO 101
+100   RA=286.9
       AJ=1.0
-101	THETA=SQRT(T21/TSTD)
-      DELTA=P21/PSTD
-      IF (IDES.NE.1) GOTO 1
-      THETAD=THETA
-      WACDS=WAC
-      WACC=WAC*THETA/DELTA
-      IF (.NOT.FXM2CP) PCNC=PCNCDS
-1	IF (.NOT.FXM2CP) GOTO 2
-
-C	SPEEOS OF MIDDLE AND INNER SPOOL ARE THE SAME
-
-      SPDMID=CNI*SQRT(T22/TSTD)
-      CNC=SPDMID/THETA
-      PCNC=100.*CNC*THETA/THETAD
-      IF (IDES.EQ.1) PCNCDS=PCNC
-2	CNC=PCNC*THETAD/(100.*THETA)
-      IF (ZC.LT.0.) ZC=0.
-      IF (ZC.GT.1.) ZC=1.
-      CNCS=CNC
-      IF (ISPOOL.EQ.1) GOTO 12
-      CALL SEARCH (ZC,CNC,PRC,WACC,ETAC,CNX(1),NCN, PRX(1,1),
-     1	WACX(1,1), ETAX(1,1),NPT(1),15,15,IGO)
-      GOTO 13
-12	PRC=1.
-      ETAC=1.
-      WAC=WA21
-      WACC=WAC*THETA/DELTA
-      CNC=1.
-      PRCCF=1.
-13	IF (MODE.EQ.1) GOTO 4
-      IF ((CNC-CNCS).GT.0.0005*CNC) MAPEDG=1
-4	IF (IGO.EQ.1.OR.IGO.EQ.2) WRITE (8,9) CNCS,WLH(IGO)
-      WAC=WACC*DELTA/THETA
-      IF (IDES.NE.1) GOTO 5
-      T21DS=T21
-      IF (ISPOOL.GE.2) PRCCF=(PRCDS-1.)/(PRC-1.)
-      ETACCF=ETACDS/ETAC
-      IF (ISPOOL.EQ.1) ETACCF=1.0
-      WACCF=WACDS/WAC
-      WRITE (6,10) PRCCF, ETACCF, WACCF, T21DS
-5	PRC=PRCCF*(PRC-1.)+1.
-      ETAC=ETACCF*ETAC
-      WAC=WACCF*WAC
-      WACP=WAC
-      IF (.NOT.DUMSPL.OR.PCBLID.NE.0..OR..NOT.FAN) GOTO 6
-      WA22=WAC
-      WAI=WA22
-      WACI=WA22*WACCF
-6	WA32=WAI-WAC
-      BLI=WA32
-      WA21=WAC
-      WACC=WACC*WACCF
-      PCBLI=BLI/WAI
-      CALL WDUCTI
-      IF (PCBLID.EQ.0.) ERR(7)=(WAC-WAI)/WAC
-      IF (.NOT.FAN) ERR(5)=(WAF-WAC-BLF)/WAC
-      IF (IDES.EQ.1.AND.PCBLID.EQ.0) ERR(7) =1.E-4
-      CALL THCOMP (PRC, ETAC, T21, H21, S21, P21, T3, H3, S3, P3)
-      IF (VCOMP.EQ.0.0) GOTO 21
+      TMAX=2222.
+      TMIN=555.5
+101   CONTINUE
+      Q(2)=0.
+      Q(3)=0.
+      P3PSI=14.696*P3
+      IF (SI) P3PSI=.14504E-3*P3
+      WA3C=WA3*SQRT(T3)/P3PSI
+      IF (SI) WA3C=WA3*SQRT(T3)/P3
+      IF (IDES.EQ.1) WA3CDS=WA3C
+      DPCOM=DPCODS*(WA3C/WA3CDS)
+      IF (DPCOM.GT.1.) DPCOM=1.
+      P4=P3*(1.-DPCOM)
+      IF (IDES.EQ.1.AND.MODE.EQ.2) T4=(TMAX+TMIN)/2.
+      IF (ITRAN.EQ.1.AND.MODE.EQ.2) CALL FCNTRL
+1     IF (T4.GT.TMAX) T4=TMAX
+      IF (T4.GE.TMIN) GO TO 2
+      T4=TMIN
+      IF (MODE.EQ.1) MAPEDG=1
+2     DTCO=T4-T3
+      IF (SI) DTCO=DTCO*9.0/5.0
+      P3PSIN=P3PSI
+      CALL SEARCH (-1.,P3PSIN,DTCO,ETAB,DUMMY,PSI(1),NPS,DELT(1,1),
+     1ETA(1,1),DUMBO(1,1),NPT(1),15,15,IGO)
+      IF (IGO.EQ.7) CALL ERROR
+      IF (IDES.NE.1) GO TO 4
+      ETABCF=ETABDS/ETAB
+4     ETAB=ETABCF*ETAB
+      IF (SI) T4=T4*9.0/5.0
+      HV=((((((-.4594317E-19*T4)-.2034116E-15)*T4+.2783643E-11)*T4+.2051
+     1501E-07)*T4-.2453116E-03)*T4-.9433296E-01)*T4+.1845537E+05
+      IF (SI) T4=T4*5.0/9.0
+      IF (SI) HV=HV*2325.4295
+      CALL THERMO (P4,HA,T4,XX1,XX2,0,0.0,0)
+      FAR4=(HA-H3)/(HV*ETAB)
+      IF (FAR4.LT.0.) FAR4=0.
+      WFBX=FAR4*WA3
+      IF (MODE.NE.2) GO TO 7
+      ERRW=(WFB-WFBX)/WFB
+      DIR=SQRT(WFB/WFBX)
+      CALL AFQUIR(Q(1),T4,ERRW,0.,20.,0.0001,DIR,T4T,IGO)
+      GO TO (5,8,6), IGO
+5     T4=T4T
+      GO TO 1
+6     CALL ERROR
+7     WFB=WFBX
+      IF (IDES.EQ.1) WFBDS=WFB
+8     CALL THERMO (P4,H4,T4,S4,XX2,1,FAR4,0)
+      WG4=WFB+WA3
+      IF (VCOMB.EQ.0.0) GO TO 21
       Q(2)=0.0
       Q(3)=0.0
-      H3P=H3
-      P3DOT=DERIV(8,P3)
-18	CONTINUE
-      CALL THERMO (P3, H3, T3, S3, XX2, 0, 0.0, 0)
-      WAC=WACP-P3DOT*VCOMP/T3/1.4/RA
-      U3=H3-AJ*RA*T3
-      U3DOT=DERIV(9,U3)
-      H3X=(WACP*H3P-(WACP-WAC)*U3-U3DOT*P3*VCOMP/T3/RA)/WAC
-      ERRW=(H3-H3X)/H3
-      DIR=SQRT(ABS(H3/H3X))
-      CALL AFQUIR(Q(1),T3,ERRW, 0., 20., 0.0001, DIR, T3T, IGO)
-      GOTO (19, 21, 20) IGO
-19	T3=T3T
-      GOTO 18
-20	CALL ERROR
-21	CONTINUE
-      IF (PCBLC.GT.0.) BLC=PCBLC*WAC
-      WA3=WAC-BLC
-      BLDU=PCBLDU*BLC
-      BLOB=PCBLOB*BLC
-      BLIP=PCBLIP*BLC
-      BLLP=PCBLLP*BLC
-      IF (MODE.NE.1) GOTO 7
-      IF (ABS(CNC-CNCS).LE.0.001*CNCS) GOTO 8
-      WRITE (8,11) CNCS, CNC
-      CALL ERROR
-7	PCNC=100.*THETA*CNC/THETAD
-8	CALL COCOMP
+      WG4P=WG4
+      H4P=H4
+      P4DOT=DERIV(10,P4)
+18    CONTINUE
+      CALL THERMO (P4,H4,T4,S4,XX2,1,FAR4,0)
+      WG4=WG4P-P4DOT*VCOMB/T4/1.4/RA
+      U4=H4-AJ*RA*T4
+      U4DOT=DERIV(11,U4)
+      H4X=(WG4P*H4P-(WG4P-WG4)*U4-U4DOT*P4*VCOMB/T4/RA)/WG4
+      ERRW=(H4-H4X)/H4
+      DIR=SQRT(ABS(H4/H4X))
+      CALL AFQUIR(Q(1),T4,ERRW,0.,20.,0.0001,DIR,T4T,IGO)
+      GO TO (19,21,20), IGO
+19    T4=T4T
+      GO TO 18
+20    CALL ERROR
+21    CONTINUE
+      IF (IDES.EQ.1) WRITE(6,10) WA3CDS,ETABCF
+      IF (FXM2CP.OR.ISPOOL.EQ.1) GO TO 9
+      CALL COHPTB
+      RETURN
+9     P50=P4
+      H50=H4
+      T50=T4
+      S50=S4
+      FAR50=FAR4
+      WG50=WG4
+C     SET HIGH PRESSURE TURBINE PARAMETERS TO ZERO, NOT USED
+      TFFHP=0.
+      CNHP=0.
+      DHTC=0.
+      DHTCHP=0.
+      ETATHP=0.
+      IF (FXM2CP) CALL COIPTB
+      IF (FXM2CP) RETURN
+C     IF RUNNING 1 SPOOL TJ GO TO COHPTB TO ZERO OUT COIPTB
+      CALL COHPTB
       RETURN
 C
 C
 C
-9	FORMAT (19H* * * CNC OFF MAP  ,F10.4, 2XA6, 13H* * * $$$$$$$)
-10	FORMAT (18HCOMPRESSOR DESIGN , 6X,8H PRCCF= ,E15.8, 8HETACCF= ,
-     1	E15.8, 8H  WACCF=, E15.8, 8H  T21DS=, E15.8)
-11	FORMAT (10HCNC WAS=  ,E15.8, 11H AND NOW=  , E15.8,
-     1	24H CHECK PCNC INPUT$$$$$$$ )
+10    FORMAT (17HOCOMBUSTOR DESIGN, 7X8H WA3CDS=,E15.8,8H ETABCF=,E15.8)
       END
-      
 
       SUBROUTINE	COCOMP
 C
